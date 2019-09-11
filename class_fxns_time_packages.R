@@ -1,18 +1,53 @@
 #install package(data.table)
 install.packages("data.table")
+# Are you a windows user? Did you get a "Rtools" warning?
+# Go this URL and download to fix: https://cran.r-project.org/bin/windows/Rtools/index.html
+
 
 #Functions ----
-#1) create a list of packages to install
-packs <- c("tidyverse","stringr","plyr","reshape2","grid", "gridExtra", "pastecs","lubridate")
 
-#write a function to install packages
-n = length(packs)
+#2 ways to install multiple packages using one command
 
-for(i in 1:n){
-  install.packages(packs[n])
-}
+# 1)
+
+    install.packages(c("tidyverse","stringr","plyr","reshape2","grid", "gridExtra", "pastecs","lubridate"))
+
+# 2) write a function to install packages
+
+    packs <- c("tidyverse","stringr","plyr","reshape2","grid", "gridExtra", "pastecs","lubridate")
+
+    n = length(packs)
+
+    # Loop through installations
+    for(i in 1:n){
+      install.packages(packs[n])
+    }
 
 
+#Sometime packages are not available from the CRAN website but are instead on other websites like GitHub or BitBucket
+
+# install the package 'devtools' to acquire functions that allow you to install from these data repositories
+install.packages("devtools")
+library(devtools)
+install_github("Displayr/flipPlots")
+
+
+#Updating packages ---
+update.packages(c("tidyverse","stringr","plyr","reshape2","grid", "gridExtra", "pastecs","lubridate"))
+
+# Playing Card Deck Data Set....
+
+# 1) Go to the github repository link where you have the CSV file
+# https://gist.github.com/garrettgman/9629323#file-deck-csv
+
+# 2) Click on the raw option present on the top right of the data
+#
+# 3) This will open a new window in the browser.
+
+#load library that has the function you need to read in the csv file
+library('data.table')
+
+deck <- fread("https://gist.githubusercontent.com/garrettgman/9629323/raw/ee5dfc039fd581cb467cc69c226ea2524913c3d8/deck.csv")
 
 
 #TIME OBJECTS ----
@@ -47,20 +82,4 @@ d$dateTime <- d$dateTime - time.zone.change * 3600
 
 
 
-db$dateTime <- as.POSIXct(str_sub(db$image, 1, 14), format="%Y%m%d%H%M%OS", tz="America/New_York") + as.numeric(str_sub(db$image, 16, 18))/1000
 
-
-
-
-#load libraries
-library('data.table')
-
-#load 'deck' data
-#1) Go to the github repository link where you have the CSV file
-# https://gist.github.com/garrettgman/9629323#file-deck-csv
-
-# 2) Click on the raw option present on the top right of the data
-#
-# 3) This will open a new window in the browser.
-
-deck <- fread("https://gist.githubusercontent.com/garrettgman/9629323/raw/ee5dfc039fd581cb467cc69c226ea2524913c3d8/deck.csv")
